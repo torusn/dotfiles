@@ -29,12 +29,12 @@ lvim.keys.visual_block_mode["J"] = false
 lvim.keys.visual_block_mode["K"] = false
 vim.opt.mouse = ""
 
+-- hybrid relative numbers
+vim.opt.number = "relativenumber"
+vim.opt.nu = "rnu"
 
--- vim.cmd("let g:minimap_width = 10")
--- vim.cmd("let g:minimap_auto_start = 1")
--- vim.cmd("let g:minimap_auto_start_win_enter = 1")
--- vim.g['minimap_width'] = 10
--- vim.g['minimap_auto_start'] = 1
+
+-- minimap Config
 vim.g.minimap_width = 10
 vim.g.minimap_auto_start = 1
 vim.g.minimap_auto_start_win_enter = 1
@@ -115,7 +115,7 @@ lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
--- lvim.builtin.nvimtree.show_icons.git = false
+-- lvim.builtin.nvimtree.show_icons.git = 0
 
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = {
@@ -244,6 +244,7 @@ lvim.plugins = {
   },
   {
     "wfxr/minimap.vim",
+    run = "cargo install --locked code-minimap",
     -- cmd = { "Minimap", "MinimapClose", "MinimapToggle", "MinimapRefresh", "MinimapUpdateHighlight" },
     -- config = function()
     --   -- vim.cmd("let g:minimap_width = 10")
