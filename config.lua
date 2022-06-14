@@ -29,11 +29,6 @@ lvim.keys.visual_block_mode["J"] = false
 lvim.keys.visual_block_mode["K"] = false
 vim.opt.mouse = ""
 
--- hybrid relative numbers
-vim.opt.number = "relativenumber"
-vim.opt.nu = "rnu"
-
-
 -- minimap Config
 vim.g.minimap_width = 10
 vim.g.minimap_auto_start = 1
@@ -262,6 +257,9 @@ lvim.plugins = {
   },
   {
     "lukas-reineke/indent-blankline.nvim",
+  },
+  {
+    "jeffkreeftmeijer/vim-numbertoggle",
   },
 }
 
