@@ -1,0 +1,19 @@
+bin:
+  link: "~/.bin"
+
+system:
+  link: "~"
+
+lunarvim:
+  prelink:
+    # - bash <(curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/master/utils/installer/install-neovim-from-release)
+    - bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh) -y
+  link: "~/.config/lvim"
+  # dependencies:
+  #   - git
+  #   - make
+  #   - pip
+  #   - npm
+  #   - nodejs
+  #   - cargo
+

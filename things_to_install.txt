@@ -1,0 +1,1 @@
+fzf -> sudo apt install fzf
