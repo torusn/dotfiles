@@ -29,10 +29,10 @@ lvim.keys.visual_block_mode["J"] = false
 lvim.keys.visual_block_mode["K"] = false
 vim.opt.mouse = ""
 
--- minimap Config
-vim.g.minimap_width = 10
-vim.g.minimap_auto_start = 1
-vim.g.minimap_auto_start_win_enter = 1
+-- -- minimap Config this has been removed
+-- vim.g.minimap_width = 10
+-- vim.g.minimap_auto_start = 1
+-- vim.g.minimap_auto_start_win_enter = 1
 -- unmap a default keymapping
 -- lvim.keys.normal_mode["<C-Up>"] = false
 -- edit a default keymapping
