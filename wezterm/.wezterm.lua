@@ -8,7 +8,7 @@ M.color_scheme = 'Dracula'
 
 M.window_background_opacity = 0.90
 
-M.font = wezterm.font('FiraCode Nerd Font')
+M.font = wezterm.font_with_fallback({ 'FiraCode Nerd Font', "JetBrains Mono" })
 
 M.window_padding = {
   left = 3,
