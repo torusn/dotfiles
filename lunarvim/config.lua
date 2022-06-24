@@ -27,7 +27,10 @@ lvim.keys.visual_block_mode["<A-j>"] = false
 lvim.keys.visual_block_mode["<A-k>"] = false
 lvim.keys.visual_block_mode["J"] = false
 lvim.keys.visual_block_mode["K"] = false
+
+-- vim sets
 vim.opt.mouse = ""
+vim.opt.colorcolumn = "100"
 
 -- -- minimap Config this has been removed
 -- vim.g.minimap_width = 10
@@ -280,6 +283,21 @@ lvim.plugins = {
       enable = true,
       max_lines = 0,
     }
+  },
+  {
+    'alexghergh/nvim-tmux-navigation', config = function()
+      require 'nvim-tmux-navigation'.setup {
+        disable_when_zoomed = true, -- defaults to false
+        keybindings = {
+          left = "<C-h>",
+          down = "<C-j>",
+          up = "<C-k>",
+          right = "<C-l>",
+          last_active = "<C-\\>",
+          next = "<C-Space>",
+        }
+      }
+    end
   }
 }
 
