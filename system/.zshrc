@@ -110,7 +110,7 @@ bindkey -v
 
 # Aliases
 alias vim="$HOME/.local/bin/lvim"
-alias l='ls -B --color-auto'
+alias l='ls -B --color=auto'
 alias ls='ls --color=auto'
 alias rm='rm -i'
 
