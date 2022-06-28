@@ -1,1 +1,2 @@
 fzf -> sudo apt install fzf
+lazygit -> go install github.com/jesseduffield/lazygit@latest

@@ -12,6 +12,7 @@ an executable
 lvim.log.level = "warn"
 lvim.format_on_save = true
 lvim.colorscheme = "onedarker"
+lvim.termguicolors = true
 -- to disable icons and use a minimalist setup, uncomment the following
 -- lvim.use_icons = false
 
@@ -30,7 +31,8 @@ lvim.keys.visual_block_mode["K"] = false
 
 -- vim sets
 vim.opt.mouse = ""
-vim.opt.colorcolumn = "100"
+vim.opt.list = true
+-- vim.opt.colorcolumn = { "100", "120" }
 
 -- -- minimap Config this has been removed
 -- vim.g.minimap_width = 10
@@ -82,28 +84,26 @@ lvim.builtin.which_key.mappings["t"] = {
 }
 
 -- indent blankline config
-vim.opt.termguicolors = true
-vim.cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
-vim.cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
-vim.cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
-vim.cmd [[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]]
-vim.cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]]
-vim.cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
-vim.opt.list = true
+-- vim.cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
+-- vim.cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
+-- vim.cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
+-- vim.cmd [[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]]
+-- vim.cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]]
+-- vim.cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
 
-require("indent_blankline").setup {
-  space_char_blankline = " ",
-  char_highlight_list = {
-    "IndentBlanklineIndent1",
-    "IndentBlanklineIndent2",
-    "IndentBlanklineIndent3",
-    "IndentBlanklineIndent4",
-    "IndentBlanklineIndent5",
-    "IndentBlanklineIndent6",
-  },
-  -- show_current_context = true,
-  -- show_current_context_start = true,
-}
+-- require("indent_blankline").setup {
+--   space_char_blankline = " ",
+--   char_highlight_list = {
+--     "IndentBlanklineIndent1",
+--     "IndentBlanklineIndent2",
+--     "IndentBlanklineIndent3",
+--     "IndentBlanklineIndent4",
+--     "IndentBlanklineIndent5",
+--     "IndentBlanklineIndent6",
+--   },
+--   -- show_current_context = true,
+--   -- show_current_context_start = true,
+-- }
 
 -- TODO: User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
@@ -225,7 +225,13 @@ formatters.setup {
 -- }
 
 -- local Terminal = require('toggleterm.terminal').Terminal
--- local lazygit = lvim.builtin.terminal.new({ cmd = "lazygit", hidden = true })
+-- local lazygit = Terminal.new({ cmd = "lazygit", hidden = true })
+
+-- function _lazygit_toggle()
+--   lazygit:toggle()
+-- end
+
+-- vim.api.nvim_set_keymap('n', 'F8', '<cmd> lua _lazygit_toggle()<CR>', { noremap = true, silent = true })
 
 lvim.builtin.terminal.direction = "horizontal"
 
@@ -234,18 +240,23 @@ lvim.builtin.terminal.direction = "horizontal"
 -- end
 
 print(require('lualine').get_config())
+lvim.builtin.lualine.options.theme = "auto"
+lvim.builtin.lualine.options.icons_enabled = true
+lvim.builtin.lualine.sections.lualine_a = { "mode" }
+lvim.builtin.lualine.sections.lualine_y = { "progress" }
+lvim.builtin.lualine.sections.lualine_z = { "location" }
 
-require('lualine').setup {
-  options = {
-    theme = "auto",
-    icons_enabled = true,
-  },
-  sections = {
-    lualine_a = { "mode" },
-    lualine_y = { 'progress' },
-    lualine_z = { 'location' }
-  }
-}
+-- require('lualine').setup {
+--   options = {
+--     theme = "auto",
+--     icons_enabled = true,
+--   },
+--   sections = {
+--     lualine_a = { "mode" },
+--     lualine_y = { 'progress' },
+--     lualine_z = { 'location' }
+--   }
+-- }
 
 -- Additional Plugins
 lvim.plugins = {
@@ -273,6 +284,15 @@ lvim.plugins = {
   },
   {
     "lukas-reineke/indent-blankline.nvim",
+    event = "BufRead",
+    setup = function()
+      vim.g.indentLine_enabled = 1
+      vim.g.indent_blankline_char = "▏"
+      vim.g.indent_blankline_filetype_exclude = { "help", "terminal", "dashboard" }
+      vim.g.indent_blankline_buftype_exclude = { "terminal" }
+      vim.g.indent_blankline_show_trailing_blankline_indent = false
+      vim.g.indent_blankline_show_first_indent_level = false
+    end
   },
   {
     "jeffkreeftmeijer/vim-numbertoggle",
@@ -298,8 +318,51 @@ lvim.plugins = {
         }
       }
     end
-  }
+  },
+  {
+    "kdheepak/lazygit.nvim",
+    cmd = "LazyGit",
+    -- run = "go install github.com/jesseduffield/lazygit@latest"
+    -- config = function()
+    --   vim.api.nvim_set_keymap('n', '<leader>gg', ':LazyGit<CR>', { noremap = true, silent = true })
+    -- end
+  },
+  {
+    "f-person/git-blame.nvim",
+    event = "BufRead",
+    config = function()
+      vim.cmd "highlight default link gitblame SpecialComment"
+      vim.g.gitblame_enabled = 0
+    end,
+  },
+  {
+    "norcalli/nvim-colorizer.lua",
+    config = function()
+      require("colorizer").setup({ "*" }, {
+        names    = true, -- "Name" codes, see https://www.w3schools.com/colors/colors_hex.asp   Blue, HotPink, OldLace, Plum, LightGreen, Coral
+        RGB      = true, -- #RGB hex codes                                                      #f0f #FAB
+        RRGGBB   = true, -- #RRGGBB hex codes                                                   #ffff00 #FF00FF
+        RRGGBBAA = true, -- #RRGGBBAA hex codes                                                 #ffff00ff #AbCdEf
+        rgb_fn   = true, -- CSS rgb() and rgba() functions                                      rgb(100,200,50) rgba(255,255,255,1.0) rgb(100%, 0%, 0%)
+        hsl_fn   = true, -- CSS hsl() and hsla() functions                                      hsl(120,100%,50%) hsla(20,100%,40%,0.7)
+        css      = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+        css_fn   = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+        mode     = 'background'; -- Set the display mode.
+      })
+    end,
+  },
+  -- {
+  --   "ziontee113/color-picker.nvim",
+  --   config = function()
+  --     vim.api.nvim_set_keymap("n", "<C-c>", "<cmd>PickColor<cr>", { noremap = true, silent = true })
+  --     vim.api.nvim_set_keymap("i", "<C-c>", "<cmd>PickColorInsert<cr>", { noremap = true, silent = true })
+  --   end
+  -- },
 }
+
+
+vim.cmd('source ~/dotfiles/lunarvim/user.vim')
+vim.cmd('source ~/projects/lvim/lua/user/lualine.lua')
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 -- lvim.autocommands.custom_groups = {
