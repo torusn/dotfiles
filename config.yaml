@@ -1,19 +1,31 @@
 bin:
-  link: "~/.bin"
+  link: "~/.local/bin"
 
 system:
   link: "~"
 
-lunarvim:
-  prelink:
-    # - bash <(curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/master/utils/installer/install-neovim-from-release)
-    - bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh) -y
-  link: "~/.config/lvim"
-  # dependencies:
-  #   - git
-  #   - make
-  #   - pip
-  #   - npm
-  #   - nodejs
-  #   - cargo
+fzf:
+  link: []
+  dependencies:
+    - fzf
+
+tmux:
+  link: []
+  dependencies:
+    - tmux
+
+# lunarvim:
+#   prelink:
+#     # - bash <(curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/master/utils/installer/install-neovim-from-release)
+#     - bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh) -y
+#   link: "~/.config/lvim"
+#   dependencies:
+#     - git
+#     - make
+#     - pip
+#     - npm
+#     - nodejs
+#     - cargo
+#   postlink:
+#     - go install github.com/jesseduffield/lazygit@latest
 

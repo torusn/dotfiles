@@ -113,6 +113,9 @@ alias vim="$HOME/.local/bin/lvim"
 alias l='ls -B --color=auto'
 alias ls='ls --color=auto'
 alias rm='rm -i'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
 
 # Set Editor to lvim for CLI tools to use lvim
 export EDITOR="$HOME/.local/bin/lvim"
