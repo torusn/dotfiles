@@ -14,6 +14,11 @@ tmux:
   dependencies:
     - tmux
 
+gdb:
+  link: [{".gdbinit": "~"}]
+  dependencies:
+    - gdb
+
 # lunarvim:
 #   prelink:
 #     # - bash <(curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/master/utils/installer/install-neovim-from-release)
