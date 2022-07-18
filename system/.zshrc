@@ -116,6 +116,7 @@ alias rm='rm -i'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
+alias python='python3'
 
 # Set Editor to lvim for CLI tools to use lvim
 export EDITOR="$HOME/.local/bin/lvim"
@@ -124,4 +125,7 @@ export EDITOR="$HOME/.local/bin/lvim"
 export PNPM_HOME="/home/torusn/.local/share/pnpm"
 export PATH="$PNPM_HOME:/usr/local/go/bin:$HOME/.local/bin:$HOME/.cargo/bin/:$PATH"
 
-cd /$HOME
+if ! [[ -n "$TMUX" ]]
+then
+  cd /$HOME
+fi

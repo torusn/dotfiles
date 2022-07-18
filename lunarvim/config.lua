@@ -10,7 +10,7 @@ an executable
 
 -- general
 lvim.log.level = "warn"
-lvim.format_on_save = true
+lvim.format_on_save = false
 lvim.colorscheme = "onedarker"
 lvim.termguicolors = true
 -- to disable icons and use a minimalist setup, uncomment the following
@@ -81,6 +81,25 @@ lvim.builtin.which_key.mappings["t"] = {
   q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
   l = { "<cmd>Trouble loclist<cr>", "LocationList" },
   w = { "<cmd>Trouble workspace_diagnostics<cr>", "Wordspace Diagnostics" },
+}
+
+-- vimspector key mappings
+lvim.builtin.which_key.mappings['v'] = {
+  name = "Vimspector",
+  G = { "<cmd>lua require('config.vimspector').generate_debug_profile()<cr>", "Generate Debug Profile" },
+  I = { "<cmd>VimspectorInstall<cr>", "Install" },
+  U = { "<cmd>VimspectorUpdate<cr>", "Update" },
+  R = { "<cmd>call vimspector#RunToCursor()<cr>", "Run to Cursor" },
+  c = { "<cmd>call vimspector#Continue()<cr>", "Continue" },
+  i = { "<cmd>call vimspector#StepInto()<cr>", "Step Into" },
+  o = { "<cmd>call vimspector#StepOver()<cr>", "Step Over" },
+  s = { "<cmd>call vimspector#Launch()<cr>", "Start" },
+  t = { "<cmd>call vimspector#ToggleBreakpoint()<cr>", "Toggle Breakpoint" },
+  u = { "<cmd>call vimspector#StepOut()<cr>", "Step Out" },
+  S = { "<cmd>call vimspector#Stop()<cr>", "Stop" },
+  r = { "<cmd>call vimspector#Restart()<cr>", "Restart" },
+  x = { "<cmd>VimspectorReset<cr>", "Exit" },
+  H = { "<cmd>lua require('config.vimspector').toggle_human_mode()<cr>", "Toggle HUMAN mode" },
 }
 
 -- indent blankline config
@@ -358,11 +377,21 @@ lvim.plugins = {
   --     vim.api.nvim_set_keymap("i", "<C-c>", "<cmd>PickColorInsert<cr>", { noremap = true, silent = true })
   --   end
   -- },
+  {
+    "puremourning/vimspector",
+    cmd = { "VimspectorInstall", "VimspectorUpdate" },
+    fn = { "vimspector#Launch()", "vimspector#ToggleBreakpoint", "vimspector#Continue" },
+    config = function()
+      require("config.vimspector").setup()
+    end,
+  },
 }
 
 
-vim.cmd('source ~/dotfiles/lunarvim/user.vim')
-vim.cmd('source ~/projects/lvim/lua/user/lualine.lua')
+-- vim.cmd('source ~/dotfiles/lunarvim/user.vim')
+-- vim.cmd('source ~/dotfiles/lvim/lua/user/lualine.lua')
+vim.cmd('source ~/.config/lvim/user.vim')
+vim.cmd('source ~/.config/lvim/lua/user/lualine.lua')
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 -- lvim.autocommands.custom_groups = {
