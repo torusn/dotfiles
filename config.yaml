@@ -1,9 +1,6 @@
 bin:
   link: "~/.local/bin"
 
-system:
-  link: "~"
-
 fzf:
   link: []
   dependencies:
@@ -33,4 +30,14 @@ lunarvim:
 #     - cargo
 #   postlink:
 #     - go install github.com/jesseduffield/lazygit@latest
+#     - do I need to move go folder somewhere?
 
+
+system:
+  link: "~"
+  dependencies:
+    - zsh
+    - ripgrep
+  postlink:
+    - sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    - mv ~/.zshrc.pre-oh-my-zsh ~/.zshrc
