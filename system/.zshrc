@@ -108,7 +108,7 @@ source $ZSH/oh-my-zsh.sh
 # enable vi mode
 bindkey -v
 
-# Aliases
+# Basic Aliases
 alias vim="$HOME/.local/bin/lvim"
 alias l='ls -B --color=auto'
 alias ls='ls --color=auto'
@@ -117,6 +117,9 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias python='python3'
+# tmux aliases
+alias ta='tmux attach -t'
+alias t='tmux-sessionizer'
 
 # Set Editor to lvim for CLI tools to use lvim
 export EDITOR="$HOME/.local/bin/lvim"
