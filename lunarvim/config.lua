@@ -258,12 +258,12 @@ lvim.builtin.terminal.direction = "horizontal"
 --
 -- end
 
-print(require('lualine').get_config())
-lvim.builtin.lualine.options.theme = "auto"
-lvim.builtin.lualine.options.icons_enabled = true
-lvim.builtin.lualine.sections.lualine_a = { "mode" }
-lvim.builtin.lualine.sections.lualine_y = { "progress" }
-lvim.builtin.lualine.sections.lualine_z = { "location" }
+-- print(require('lualine').get_config())
+-- lvim.builtin.lualine.options.theme = "auto"
+-- lvim.builtin.lualine.options.icons_enabled = true
+-- lvim.builtin.lualine.sections.lualine_a = { "mode" }
+-- lvim.builtin.lualine.sections.lualine_y = { "progress" }
+-- lvim.builtin.lualine.sections.lualine_z = { "location" }
 
 -- require('lualine').setup {
 --   options = {
@@ -388,10 +388,10 @@ lvim.plugins = {
 }
 
 
--- vim.cmd('source ~/dotfiles/lunarvim/user.vim')
--- vim.cmd('source ~/dotfiles/lvim/lua/user/lualine.lua')
 vim.cmd('source ~/.config/lvim/user.vim')
-vim.cmd('source ~/.config/lvim/lua/user/lualine.lua')
+-- vim.cmd('source ~/.config/lvim/lua/user/lualine.lua')
+-- Require additional files
+require("user.lualine")
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 -- lvim.autocommands.custom_groups = {
