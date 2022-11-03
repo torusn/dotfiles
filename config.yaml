@@ -41,3 +41,4 @@ system:
   postlink:
     - sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     - mv ~/.zshrc.pre-oh-my-zsh ~/.zshrc
+    - source ~/.zshrc
