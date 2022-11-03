@@ -217,7 +217,7 @@ formatters.setup {
     filetypes = { "json" },
   },
   {
-    command = "black",
+    command = "autopep8",
     args = { "--line-width", "100" },
     filetype = { "python" },
   }
@@ -385,6 +385,9 @@ lvim.plugins = {
       require("config.vimspector").setup()
     end,
   },
+  {
+    "ray-x/go.nvim",
+  },
 }
 
 
@@ -397,3 +400,42 @@ require("user.lualine")
 -- lvim.autocommands.custom_groups = {
 --   { "BufWinEnter", "*.lua", "setlocal ts=8 sw=8" },
 -- }
+
+require('go.format').goimport()
+lvim.builtin.which_key.mappings["o"] = {
+  name = "Go",
+--  t = {
+--    name = "Test",
+--    p = { "<cmd> GoTestPkg <CR>", "Test package" },
+--    f = { "<cmd> GoTestFunc <CR>", "Test this function" },
+--    F = { "<cmd> GoTestFile <CR>", "Test this file" },
+--    a = { "<cmd> GoAddTest -template=testify<CR>", "Add test for this function" },
+--    D = { "<cmd> lua _GO_NVIM_CFG.test_runner='dlv'<CR> ", "Switch to dlv" },
+--    R = { "<cmd> lua _GO_NVIM_CFG.test_runner='richgo'<CR> ", "Switch to richgo" },
+--    G = { "<cmd> lua _GO_NVIM_CFG.test_runner='go'<CR> ", "Switch to vanilla go" },
+--  },
+--  d = {
+--    name = "Debug",
+--    l = { "<cmd> GoDebug <CR>", "Launch" },
+--    b = { "<cmd> GoBreakToggle <CR>", "Breakpoint" },
+--    B = { "<cmd> BreakCondition <CR>", "Break Condition" },
+--    r = { "<cmd> ReplToggle <CR>", "Toggle Repl" },
+--    -- s = { "<cmd> GoDbgStep <CR>", "Step" },
+--    -- c = { "<cmd> GoDbgContinue <CR>", "Continue" },
+--    q = { "<cmd> GoDbgStop <CR>", "Stop" },
+--    k = { "<cmd> GoDbgKeys <CR>", "Show Map" },
+--  },
+--  f = {
+--    name = "fill",
+--    s = { "<cmd> GoFillStruct <CR>", "Autofill struct" },
+--    w = { "<cmd> GoFillSwitch <CR>", "Autofill switch" },
+--  },
+  c = { "<cmd> GoCoverage -t testing <CR>", "Show Coverage" },
+  D = { "<cmd> GoDoc <CR>", "GoDoc" },
+  l = { "<cmd> GoLint <CR>", "Lint" },
+  o = { "<cmd> GoPkgOutline <CR>", "Package Outline" },
+  i = { "<cmd> GoImport <CR>", "Organize Imports" },
+  I = { "<cmd> GoImpl <CR>", "Implement Interface" },
+  j = { "<cmd> GoAlt! <CR>", "Alternate test file" },
+  e = { "<cmd> GoIfErr <CR>", "Add if err" },
+}
