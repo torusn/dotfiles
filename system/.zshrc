@@ -125,10 +125,14 @@ alias t='tmux-sessionizer'
 export EDITOR="$HOME/.local/bin/lvim"
 
 
-export PNPM_HOME="/home/torusn/.local/share/pnpm"
-export PATH="$PNPM_HOME:/usr/local/go/bin:$HOME/.local/bin:$HOME/.cargo/bin/:$PATH"
+export PNPM_HOME="$HOME/.local/share/pnpm"
+export GOPATH="$HOME/go"
+export PATH="$PNPM_HOME:$GOPATH/bin:/usr/local/go/bin:$HOME/.local/bin:$HOME/.cargo/bin/:$PATH"
 
 if ! [[ -n "$TMUX" ]]
 then
   cd /$HOME
 fi
+
+#export NVM_DIR="/home/nictorus/.nvm"
+#[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm

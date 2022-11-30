@@ -28,6 +28,9 @@ lvim.keys.visual_block_mode["<A-j>"] = false
 lvim.keys.visual_block_mode["<A-k>"] = false
 lvim.keys.visual_block_mode["J"] = false
 lvim.keys.visual_block_mode["K"] = false
+-- needed for lvim 1.2/neovim 0.8
+lvim.keys.normal_mode["L"] = ":bnext<CR>"
+lvim.keys.normal_mode["H"] = ":bprev<CR>"
 
 -- vim sets
 vim.opt.mouse = ""
@@ -60,7 +63,6 @@ vim.opt.list = true
 --     ["<C-k>"] = actions.move_selection_previous,
 --   },
 -- }
-
 lvim.builtin.which_key.mappings["w"] = {
   name = "Window",
   j = { "<cmd>split<cr>", "Split Down" },
@@ -102,6 +104,14 @@ lvim.builtin.which_key.mappings['v'] = {
   H = { "<cmd>lua require('config.vimspector').toggle_human_mode()<cr>", "Toggle HUMAN mode" },
 }
 
+-- git diffview key mappings
+lvim.builtin.which_key.mappings["G"] = {
+  name = "GitDiff",
+  d = { "<cmd> DiffviewFileHistory <cr>", "Open Diffview" },
+  c = { "<cmd> DiffviewClose <cr>", "Close Diffview" },
+  f = { "<cmd> DiffviewToggleFiles <cr>", "Open Files Toolbar" },
+}
+
 -- indent blankline config
 -- vim.cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
 -- vim.cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
@@ -128,7 +138,7 @@ lvim.builtin.which_key.mappings['v'] = {
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
-lvim.builtin.notify.active = true
+-- lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
@@ -301,18 +311,18 @@ lvim.plugins = {
     "tpope/vim-surround",
     keys = { "c", "d", "y" }
   },
-  {
-    "lukas-reineke/indent-blankline.nvim",
-    event = "BufRead",
-    setup = function()
-      vim.g.indentLine_enabled = 1
-      vim.g.indent_blankline_char = "▏"
-      vim.g.indent_blankline_filetype_exclude = { "help", "terminal", "dashboard" }
-      vim.g.indent_blankline_buftype_exclude = { "terminal" }
-      vim.g.indent_blankline_show_trailing_blankline_indent = false
-      vim.g.indent_blankline_show_first_indent_level = false
-    end
-  },
+  -- {
+  --   "lukas-reineke/indent-blankline.nvim",
+  --   event = "BufRead",
+  --   setup = function()
+  --     vim.g.indentLine_enabled = 1
+  --     vim.g.indent_blankline_char = "▏"
+  --     vim.g.indent_blankline_filetype_exclude = { "help", "terminal", "dashboard" }
+  --     vim.g.indent_blankline_buftype_exclude = { "terminal" }
+  --     vim.g.indent_blankline_show_trailing_blankline_indent = false
+  --     vim.g.indent_blankline_show_first_indent_level = false
+  --   end
+  -- },
   {
     "jeffkreeftmeijer/vim-numbertoggle",
   },
@@ -388,6 +398,45 @@ lvim.plugins = {
   {
     "ray-x/go.nvim",
   },
+  {
+    "ray-x/guihua.lua",
+  },
+  {
+    "sindrets/diffview.nvim",
+    requires = "nvim-lua/plenary.nvim"
+  },
+  {
+    "folke/todo-comments.nvim",
+    requires = "nvim-lua/plenary.nvim",
+    config = function()
+      require("todo-comments").setup({
+        keywords = {
+          FIX = {
+            alt = { "FIXME", "BUG", "ISSUE" }
+          },
+          WARN = {
+            alt = { "WARNING", "XXX" }
+          },
+        },
+        merge_keywords = true,
+        highlight = {
+          pattern = [[.*<(KEYWORDS)\s*]], -- match without colon. probably triggers false positives
+          exclude = { "json", "markdown" }
+        }
+        -- search = {
+        --   command = "rg",
+        --   args = {
+        --     "--color=never",
+        --     "--no-heading",
+        --     "--with-filename",
+        --     "--line-number",
+        --     "--column",
+        --   },
+        --   pattern = [[\b(KEYWORDS)\b]], -- match without the extra colon. Probably triggers false positives
+        -- },
+      })
+    end
+  },
 }
 
 
@@ -400,36 +449,45 @@ require("user.lualine")
 -- lvim.autocommands.custom_groups = {
 --   { "BufWinEnter", "*.lua", "setlocal ts=8 sw=8" },
 -- }
+require("go").setup({
+  max_line_len = 110,
+  test_runner = "go",
+  build_tags = "testing",
+  run_in_floaterm = false,
+  gotests_template = "testify",
+  dap_debug = true,
+  dap_debug_gui = true,
+})
 
 require('go.format').goimport()
 lvim.builtin.which_key.mappings["o"] = {
   name = "Go",
---  t = {
---    name = "Test",
---    p = { "<cmd> GoTestPkg <CR>", "Test package" },
---    f = { "<cmd> GoTestFunc <CR>", "Test this function" },
---    F = { "<cmd> GoTestFile <CR>", "Test this file" },
---    a = { "<cmd> GoAddTest -template=testify<CR>", "Add test for this function" },
---    D = { "<cmd> lua _GO_NVIM_CFG.test_runner='dlv'<CR> ", "Switch to dlv" },
---    R = { "<cmd> lua _GO_NVIM_CFG.test_runner='richgo'<CR> ", "Switch to richgo" },
---    G = { "<cmd> lua _GO_NVIM_CFG.test_runner='go'<CR> ", "Switch to vanilla go" },
---  },
---  d = {
---    name = "Debug",
---    l = { "<cmd> GoDebug <CR>", "Launch" },
---    b = { "<cmd> GoBreakToggle <CR>", "Breakpoint" },
---    B = { "<cmd> BreakCondition <CR>", "Break Condition" },
---    r = { "<cmd> ReplToggle <CR>", "Toggle Repl" },
---    -- s = { "<cmd> GoDbgStep <CR>", "Step" },
---    -- c = { "<cmd> GoDbgContinue <CR>", "Continue" },
---    q = { "<cmd> GoDbgStop <CR>", "Stop" },
---    k = { "<cmd> GoDbgKeys <CR>", "Show Map" },
---  },
---  f = {
---    name = "fill",
---    s = { "<cmd> GoFillStruct <CR>", "Autofill struct" },
---    w = { "<cmd> GoFillSwitch <CR>", "Autofill switch" },
---  },
+  t = {
+    name = "Test",
+    p = { "<cmd> GoTestPkg <CR>", "Test package" },
+    f = { "<cmd> GoTestFunc <CR>", "Test this function" },
+    F = { "<cmd> GoTestFile <CR>", "Test this file" },
+    a = { "<cmd> GoAddTest -template=testify<CR>", "Add test for this function" },
+    D = { "<cmd> lua _GO_NVIM_CFG.test_runner='dlv'<CR> ", "Switch to dlv" },
+    R = { "<cmd> lua _GO_NVIM_CFG.test_runner='richgo'<CR> ", "Switch to richgo" },
+    G = { "<cmd> lua _GO_NVIM_CFG.test_runner='go'<CR> ", "Switch to vanilla go" },
+  },
+  d = {
+    name = "Debug",
+    l = { "<cmd> GoDebug <CR>", "Launch" },
+    b = { "<cmd> GoBreakToggle <CR>", "Breakpoint" },
+    B = { "<cmd> BreakCondition <CR>", "Break Condition" },
+    r = { "<cmd> ReplToggle <CR>", "Toggle Repl" },
+    -- s = { "<cmd> GoDbgStep <CR>", "Step" },
+    -- c = { "<cmd> GoDbgContinue <CR>", "Continue" },
+    q = { "<cmd> GoDbgStop <CR>", "Stop" },
+    k = { "<cmd> GoDbgKeys <CR>", "Show Map" },
+  },
+  f = {
+    name = "fill",
+    s = { "<cmd> GoFillStruct <CR>", "Autofill struct" },
+    w = { "<cmd> GoFillSwitch <CR>", "Autofill switch" },
+  },
   c = { "<cmd> GoCoverage -t testing <CR>", "Show Coverage" },
   D = { "<cmd> GoDoc <CR>", "GoDoc" },
   l = { "<cmd> GoLint <CR>", "Lint" },

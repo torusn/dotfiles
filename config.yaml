@@ -16,22 +16,6 @@ gdb:
   dependencies:
     - gdb
 
-lunarvim:
-#   prelink:
-#     # - bash <(curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/master/utils/installer/install-neovim-from-release)
-      # - bash <(curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh)
-#     - bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh) -y
-  link: "~/.config/lvim"
-#   dependencies:
-#     - git
-#     - make
-#     - pip
-#     - npm
-#     - nodejs
-#     - cargo
-#   postlink:
-#     - go install github.com/jesseduffield/lazygit@latest
-#     - do I need to move go folder somewhere?
 
 
 system:
@@ -43,3 +27,20 @@ system:
     - sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     - mv ~/.zshrc.pre-oh-my-zsh ~/.zshrc
     - source ~/.zshrc
+
+lunarvim:
+  # prelink:
+  #   - bash <(curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/master/utils/installer/install-neovim-from-release)
+  #   - bash <(curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh)
+  #   - bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh) -y
+  link: "~/.config/lvim"
+  # dependencies:
+#     - git
+#     - make
+#     - pip
+#     - npm
+#     - nodejs
+    # - cargo
+      #   postlink:
+     #     - go install github.com/jesseduffield/lazygit@latest
+#     - do I need to move go folder somewhere?
