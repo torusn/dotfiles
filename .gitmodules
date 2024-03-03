@@ -1,3 +1,6 @@
 [submodule "gdb"]
 	path = gdb
 	url = https://github.com/cyrus-and/gdb-dashboard
+[submodule "nvim_minimal"]
+	path = nvim_minimal
+	url = git@github.com:torusn/nvim_minimal.git
