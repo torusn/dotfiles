@@ -10,7 +10,11 @@ an executable
 
 -- general
 lvim.log.level = "warn"
-lvim.format_on_save = false
+lvim.format_on_save = {
+  pattern = "*.go",
+  timeout = 1000,
+  filter = require("lvim.lsp.utils").format_filter,
+}
 lvim.colorscheme = "onedarker"
 lvim.termguicolors = true
 -- to disable icons and use a minimalist setup, uncomment the following
@@ -149,7 +153,7 @@ lvim.builtin.treesitter.ensure_installed = {
   "bash",
   "c",
   "javascript",
-  "json",
+  -- "json",
   "lua",
   "python",
   "typescript",
@@ -160,7 +164,7 @@ lvim.builtin.treesitter.ensure_installed = {
   "yaml",
 }
 
-lvim.builtin.treesitter.ignore_install = { "haskell" }
+lvim.builtin.treesitter.ignore_install = { "haskell", "json" }
 lvim.builtin.treesitter.highlight.enabled = true
 
 
@@ -183,9 +187,9 @@ local opts = {
   autostart = true
 } -- check the lspconfig documentation for a list of all possible options
 require("lvim.lsp.manager").setup("pyright", opts)
-require("lvim.lsp.manager").setup("jsonls", {
-  autostart = true,
-})
+-- require("lvim.lsp.manager").setup("jsonls", {
+--   autostart = true,
+-- })
 -- ---remove a server from the skipped list, e.g. eslint, or emmet_ls. !!Requires `:LvimCacheReset` to take effect!!
 -- ---`:LvimInfo` lists which server(s) are skiipped for the current filetype
 -- vim.tbl_map(function(server)
@@ -221,16 +225,21 @@ require("lvim.lsp.manager").setup("jsonls", {
 -- -- set additional linters
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
-  {
-    command = "prettier",
-    args = { "--print-width", "100" },
-    filetypes = { "json" },
-  },
+  -- {
+  --   command = "prettier",
+  --   args = { "--print-width", "100" },
+  --   filetypes = { "json" },
+  -- },
   {
     command = "autopep8",
     args = { "--line-width", "100" },
     filetype = { "python" },
-  }
+  },
+  {
+    command = "sqlfluff",
+    args = { "dialect", "postgres" },
+    filetype = { "sql" },
+  },
   -- {
   --   exe = "clang-format",
   --   args = {}
@@ -453,7 +462,7 @@ require("go").setup({
   max_line_len = 110,
   test_runner = "go",
   build_tags = "testing",
-  run_in_floaterm = false,
+  run_in_floaterm = true,
   gotests_template = "testify",
   dap_debug = true,
   dap_debug_gui = true,
