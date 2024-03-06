@@ -109,6 +109,7 @@ source $ZSH/oh-my-zsh.sh
 bindkey -v
 
 # Basic Aliases
+alias nvim="/opt/nvim-linux64/bin/nvim"
 alias vim="$HOME/.local/bin/lvim"
 alias l='ls -B --color=auto'
 alias ls='ls --color=auto'
@@ -120,6 +121,8 @@ alias python='python3'
 # tmux aliases
 alias ta='tmux attach -t'
 alias t='tmux-sessionizer'
+# rsync aliases
+alias rsync='rsync --info=progress2'
 
 # Set Editor to lvim for CLI tools to use lvim
 export EDITOR="$HOME/.local/bin/lvim"
