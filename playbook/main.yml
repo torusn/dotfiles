@@ -52,23 +52,28 @@
         path: "{{ lookup('env', 'HOME') + '/.config' }}"
         state: directory
         mode: '0755'
+    - name: "Find all dotfiles/bin files to symlink"
+      find:
+        paths: "{{ lookup('env', 'HOME') + '/dotfiles/bin' }}"
+      register: find_bin
     - name: "Setup symlinks for ~/.local/bin"
       ansible.builtin.file:
-        src: "{{ lookup('env','HOME') + '/dotfiles/bin' }}"
-        dest: "{{ lookup('env','HOME') + '/.local/bin' }}"
+        src: "{{ item.path }}"
+        dest: "{{ lookup('env','HOME') + '/.local/bin/' + item.path | basename }}"
         owner: "{{ ansible_user }}"
         state: link
+      with_items: "{{ find_bin.files }}"
     - name: "Find all system files to symlink"
       find:
         paths: "{{ lookup('env', 'HOME') + '/dotfiles/system' }}"
-      register: find
+      register: find_system
     - name: "Setup symlinks for ~ files"
       ansible.builtin.file:
         src: "{{ item.path }}"
         dest: "{{ lookup('env','HOME') + '/' + item.path | basename }}"
         owner: "{{ ansible_user }}"
         state: link
-      with_items: "{{ find.files }}"
+      with_items: "{{ find_system.files }}"
     - name: "Get nvim"
       ansible.builtin.get_url:
         url: "https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz"
@@ -83,20 +88,25 @@
     - name: "Link nvim config"
       ansible.builtin.file:
         src: "{{ lookup('env','HOME') + '/dotfiles/nvim_minimal' }}"
-        dest: "{{ lookup('env','HOME') + '/.local/nvim' }}"
+        dest: "{{ lookup('env','HOME') + '/.config/nvim' }}"
         owner: "{{ ansible_user }}"
         state: link
-    - name: "Get golang"
-      ansible.builtin.get_url:
-        url: "https://go.dev/dl/go1.22.0.linux-amd64.tar.gz"
-        dest: "/tmp/go1.22.0.tar.gz"
-        mode: '0555'
-    - name: "Install golang"
-      ansible.builtin.shell:
-        cmd: |
-          rm -rf /usr/local/go
-          tar -C /usr/local -xzf /tmp/go1.22.0.tar.gz
-      become: true
+    # - name: "Clean old lazy setup"
+    #   ansible.builtin.shell:
+    #     cmd: |
+    #       rm -rfd "{{ lookup('env','HOME') + '/.local/share/nvim' }}"
+    #   become: true
+    # - name: "Get golang"
+    #   ansible.builtin.get_url:
+    #     url: "https://go.dev/dl/go1.22.0.linux-amd64.tar.gz"
+    #     dest: "/tmp/go1.22.0.tar.gz"
+    #     mode: '0555'
+    # - name: "Install golang"
+    #   ansible.builtin.shell:
+    #     cmd: |
+    #       rm -rf /usr/local/go
+    #       tar -C /usr/local -xzf /tmp/go1.22.0.tar.gz
+    #   become: true
     #- name: "Link gdb config"
     #  ansible.builtin.file:
     #    src: "{{ lookup('file', lookup('env','HOME') + '/dotfiles/.gdbinit') }}"
