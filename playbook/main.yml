@@ -42,9 +42,22 @@
       command: sh /tmp/install_ohmyzsh.sh --unattended
       register: ohmyzsh_result
       failed_when: "'FAILED' in ohmyzsh_result.stderr"
-    - name: "Ensure ~/.local"
+    - name: "Find all system files to symlink"
+      find:
+        paths: "{{ lookup('env', 'HOME') + '/dotfiles/system' }}"
+        hidden: true
+      register: find_system
+    - name: "Setup symlinks for ~ files"
       ansible.builtin.file:
-        path: "{{ lookup('env', 'HOME') + '/.local' }}"
+        src: "{{ item.path }}"
+        dest: "{{ lookup('env','HOME') + '/' + item.path | basename }}"
+        owner: "{{ ansible_user }}"
+        state: link
+        force: true
+      with_items: "{{ find_system.files }}"
+    - name: "Ensure ~/.local/bin"
+      ansible.builtin.file:
+        path: "{{ lookup('env', 'HOME') + '/.local/bin' }}"
         state: directory
         mode: '0755'
     - name: "Ensure ~/.config"
@@ -63,17 +76,6 @@
         owner: "{{ ansible_user }}"
         state: link
       with_items: "{{ find_bin.files }}"
-    - name: "Find all system files to symlink"
-      find:
-        paths: "{{ lookup('env', 'HOME') + '/dotfiles/system' }}"
-      register: find_system
-    - name: "Setup symlinks for ~ files"
-      ansible.builtin.file:
-        src: "{{ item.path }}"
-        dest: "{{ lookup('env','HOME') + '/' + item.path | basename }}"
-        owner: "{{ ansible_user }}"
-        state: link
-      with_items: "{{ find_system.files }}"
     - name: "Get nvim"
       ansible.builtin.get_url:
         url: "https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz"
