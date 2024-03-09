@@ -109,8 +109,7 @@ source $ZSH/oh-my-zsh.sh
 bindkey -v
 
 # Basic Aliases
-alias nvim="/opt/nvim-linux64/bin/nvim"
-alias vim="$HOME/.local/bin/lvim"
+alias {vim,nvim}="/opt/nvim-linux64/bin/nvim"
 alias l='ls -B --color=auto'
 alias ls='ls --color=auto'
 alias rm='rm -i'
