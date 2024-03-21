@@ -124,7 +124,7 @@ alias t='tmux-sessionizer'
 alias rsync='rsync --info=progress2'
 
 # Set Editor to lvim for CLI tools to use lvim
-export EDITOR="$HOME/.local/bin/lvim"
+export EDITOR="/opt/nvim-linux64/bin/nvim"
 
 
 export PNPM_HOME="/home/torusn/.local/share/pnpm"
