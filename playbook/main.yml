@@ -29,6 +29,7 @@
           - python3-pip
           - fzf
           - ripgrep
+          - unzip # this is a dep for clangd neovim plugin
           #    - gdb
           #    - docker
           #    - docker-compose
