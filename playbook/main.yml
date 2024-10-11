@@ -99,17 +99,17 @@
     #     cmd: |
     #       rm -rfd "{{ lookup('env','HOME') + '/.local/share/nvim' }}"
     #   become: true
-    # - name: "Get golang"
-    #   ansible.builtin.get_url:
-    #     url: "https://go.dev/dl/go1.22.0.linux-amd64.tar.gz"
-    #     dest: "/tmp/go1.22.0.tar.gz"
-    #     mode: '0555'
-    # - name: "Install golang"
-    #   ansible.builtin.shell:
-    #     cmd: |
-    #       rm -rf /usr/local/go
-    #       tar -C /usr/local -xzf /tmp/go1.22.0.tar.gz
-    #   become: true
+    - name: "Get golang"
+      ansible.builtin.get_url:
+        url: "https://go.dev/dl/go1.23.2.linux-amd64.tar.gz"
+        dest: "/tmp/go1.23.2.tar.gz"
+        mode: '0555'
+    - name: "Install golang"
+      ansible.builtin.shell:
+        cmd: |
+          rm -rf /usr/local/go
+          tar -C /usr/local -xzf /tmp/go1.23.2.tar.gz
+      become: true
     #- name: "Link gdb config"
     #  ansible.builtin.file:
     #    src: "{{ lookup('file', lookup('env','HOME') + '/dotfiles/.gdbinit') }}"
