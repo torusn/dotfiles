@@ -53,15 +53,17 @@ config.window_frame = {
     font = wezterm.font { family = 'Noto Sans', weight = 'Regular' },
 }
 
-config.leader = { key = 'a', mods = 'CMD', timeout_milliseconds = 1000 }
+config.leader = { key = 'a', mods = 'SUPER', timeout_milliseconds = 1000 }
 config.keys = {
-  { key = 'f', mods = 'CMD', action = act.SplitVertical { domain = 'CurrentPaneDomain' }, },
-  { key = 'd', mods = 'CMD', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' }, },
-  { key = 'h', mods = 'CMD', action = act.ActivatePaneDirection 'Left', },
-  { key = 'l', mods = 'CMD', action = act.ActivatePaneDirection 'Right', },
-  { key = 't', mods = 'CMD', action = act.SpawnTab 'CurrentPaneDomain' },
-  { key = 'w', mods = 'CMD', action = act.CloseCurrentTab{ confirm = false } },
-  { key = 'x', mods = 'CMD', action = act.CloseCurrentPane{ confirm = false } },
+  { key = '"', mods = 'CTRL|SHIFT', action = act.SplitVertical { domain = 'CurrentPaneDomain' }, },
+  { key = '%', mods = 'CTRL|SHIFT', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' }, },
+  { key = 'j', mods = 'CTRL|SHIFT', action = act.ActivatePaneDirection 'Down', },
+  { key = 'k', mods = 'CTRL|SHIFT', action = act.ActivatePaneDirection 'Up', },
+  { key = 'h', mods = 'CTRL|SHIFT', action = act.ActivatePaneDirection 'Left', },
+  { key = 'l', mods = 'CTRL|SHIFT', action = act.ActivatePaneDirection 'Right', },
+  { key = 't', mods = 'CTRL|SHIFT', action = act.SpawnTab 'CurrentPaneDomain' },
+  { key = 'w', mods = 'CTRL|SHIFT', action = act.CloseCurrentTab{ confirm = false } },
+  { key = 'x', mods = 'CTRL|SHIFT', action = act.CloseCurrentPane{ confirm = false } },
 }
 
 return config;
