@@ -8,9 +8,7 @@ if wezterm.config_builder then
   config = wezterm.config_builder()
 end
 
-config.color_scheme = 'Dracula'
-
-config.window_background_opacity = 0.90
+config.color_scheme = 'Kanagawa (Gogh)'
 
 config.font = wezterm.font_with_fallback({ 'FiraCode Nerd Font', "JetBrains Mono" })
 
