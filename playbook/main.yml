@@ -86,7 +86,8 @@
       ansible.builtin.shell:
         cmd: |
           rm -rf /opt/nvim
-          tar -C /opt -xzf /tmp/nvim.tar.gz
+          mkdir -p /opt/nvim
+          tar -C /opt/nvim --strip-components=1 -xzf /tmp/nvim.tar.gz
       become: true
     - name: "Link nvim config"
       ansible.builtin.file:
