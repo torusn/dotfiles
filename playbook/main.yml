@@ -79,7 +79,7 @@
       with_items: "{{ find_bin.files }}"
     - name: "Get nvim"
       ansible.builtin.get_url:
-        url: "https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz"
+        url: "https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz"
         dest: "/tmp/nvim.tar.gz"
         mode: '0555'
     - name: "Install nvim"
