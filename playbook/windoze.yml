@@ -4,6 +4,10 @@
     ansible_user: "{{ lookup('env', 'USER') }}"
 
   tasks:
+    - name: Install GlazeWM and Zebar
+      ansible.builtin.shell:
+        cmd: |
+          winget.exe install glazewm
     - name: "Copy windoze files"
       ansible.builtin.shell:
         cmd: |
