@@ -4,19 +4,6 @@
     ansible_user: "{{ lookup('env', 'USER') }}"
 
   tasks:
-    - name: Install Zsh with dependencies are installed
-      apt:
-        name: "{{ ['zsh'] + zsh_dependencies }}"
-        state: present
-        update_cache: yes
-      become: true
-      vars:
-        zsh_dependencies: []
-    - name: Ensure zsh is the default shell
-      user:
-        name: "{{ ansible_user }}"
-        shell: "/usr/bin/zsh"
-      become: true
     - name: "Install core utils"
       apt:
         name: "{{ packages }}"
@@ -30,19 +17,8 @@
           - fzf
           - ripgrep
           - unzip # this is a dep for clangd neovim plugin
-          #    - gdb
-          #    - docker
-          #    - docker-compose
         state: latest
         update_cache: true
-    - name: Download Oh My Zsh installation script
-      ansible.builtin.get_url:
-        url: "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
-        dest: "/tmp/install_ohmyzsh.sh"
-    - name: Run Oh My Zsh installation script
-      command: sh /tmp/install_ohmyzsh.sh --unattended
-      register: ohmyzsh_result
-      failed_when: "'FAILED' in ohmyzsh_result.stderr"
     - name: "Find all system files to symlink"
       find:
         paths: "{{ lookup('env', 'HOME') + '/dotfiles/system' }}"
@@ -95,21 +71,16 @@
         dest: "{{ lookup('env','HOME') + '/.config/nvim' }}"
         owner: "{{ ansible_user }}"
         state: link
-    # - name: "Clean old lazy setup"
-    #   ansible.builtin.shell:
-    #     cmd: |
-    #       rm -rfd "{{ lookup('env','HOME') + '/.local/share/nvim' }}"
-    #   become: true
     - name: "Get golang"
       ansible.builtin.get_url:
-        url: "https://go.dev/dl/go1.23.2.linux-amd64.tar.gz"
-        dest: "/tmp/go1.23.2.tar.gz"
+        url: "https://go.dev/dl/go1.24.1.linux-amd64.tar.gz"
+        dest: "/tmp/go1.24.1.tar.gz"
         mode: '0555'
     - name: "Install golang"
       ansible.builtin.shell:
         cmd: |
-          rm -rf /usr/local/go
-          tar -C /usr/local -xzf /tmp/go1.23.2.tar.gz
+          rm -rf ~/.local/go
+          tar -C ~/.local/go -xzf /tmp/go1.24.1.tar.gz
       become: true
     #- name: "Link gdb config"
     #  ansible.builtin.file:
