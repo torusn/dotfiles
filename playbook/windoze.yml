@@ -1,0 +1,19 @@
+- hosts: localhost
+  gather_facts: no
+  vars:
+    ansible_user: "{{ lookup('env', 'USER') }}"
+
+  tasks:
+    - name: "Copy windoze files"
+      ansible.builtin.shell:
+        cmd: |
+          wslpath $(cmd.exe /C "echo %USERPROFILE%" 2>/dev/null | tr -d '\r')
+      register: userprofile
+    - name: Copy glazeWM config out of WSL
+      ansible.builtin.copy:
+        src: "{{ lookup('env', 'HOME') + '/dotfiles/windoze/glaze.yaml' }}"
+        dest: "{{ userprofile.stdout + '/config.yml' }}" 
+    - name: Copy wezterm config out of WSL
+      ansible.builtin.copy:
+        src: "{{ lookup('env', 'HOME') + '/dotfiles/wezterm/.wezterm.lua' }}"
+        dest: "{{ userprofile.stdout + '/.wezterm.lua' }}"
