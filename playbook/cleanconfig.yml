@@ -1,0 +1,26 @@
+- hosts: localhost
+  gather_facts: no
+  vars:
+    ansible_user: "{{ lookup('env', 'USER') }}"
+
+  tasks:
+    - name: "Remove neovim"
+      ansible.builtin.shell:
+        cmd: |
+          rm -rf /opt/nvim || true
+      become: true
+    - name: "Remove neovim config"
+      ansible.builtin.shell:
+        cmd: |
+          rm -rf "{{ lookup('env', 'HOME') + '/.config/nvim' }}" || true
+          rm -rf "{{ lookup('env', 'HOME') + '/.local/share/nvim' }}" || true
+          rm -rf "{{ lookup('env', 'HOME') + '/.local/state/nvim' }}" || true
+    - name: "Remove golang"
+      ansible.builtin.shell:
+        cmd: |
+          rm -rf ~/.local/go || true
+    - name: "Remove golang"
+      ansible.builtin.shell:
+        cmd: |
+          rm -rf /usr/local/go || true
+      become: true
