@@ -79,9 +79,8 @@
     - name: "Install golang"
       ansible.builtin.shell:
         cmd: |
-          rm -rf ~/.local/go
-          tar -C ~/.local/go -xzf /tmp/go1.24.1.tar.gz
-      become: true
+          rm -rf ~/.local/go || true
+          tar -C ~/.local/ -xzf /tmp/go1.24.1.tar.gz
     #- name: "Link gdb config"
     #  ansible.builtin.file:
     #    src: "{{ lookup('file', lookup('env','HOME') + '/dotfiles/.gdbinit') }}"
