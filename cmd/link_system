@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+set -e
+
+
+pwd_name="$(basename "$PWD")"
+
+if [ "$pwd_name" != "dotfiles" ]; then
+	echo "must be run from root of dotfiles dir"
+	exit 1
+fi
+
+shopt -s dotglob
+for file in ./system/*; do
+	if [ -f "$file" ]; then
+		real="$(realpath "$file")"
+		name="$(basename "$file")"
+		echo "Linking $real -> ~/$name"
+		ln -s "$real" ~/"$name"
+	fi
+done
+
+shopt -u dotglob

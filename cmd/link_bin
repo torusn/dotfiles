@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+set -e
+
+pwd_name="$(basename "$PWD")"
+
+mkdir -p ~/.local/bin
+
+if [ "$pwd_name" != "dotfiles" ]; then
+	echo "must be run from root of dotfiles dir"
+	exit 1
+fi
+
+for file in ./bin/*; do
+	if [ -f "$file" ]; then
+		real="$(realpath "$file")"
+		name="$(basename "$file")"
+		ln -s "$real" ~/.local/bin/"$name"
+	fi
+done

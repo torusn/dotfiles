@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -e
+
+pwd_name="$(basename "$PWD")"
+
+if [ "$pwd_name" != "dotfiles" ]; then
+	echo "must be run from root of dotfiles dir"
+	exit 1
+fi
+
+mkdir -p ~/.config
+
+for file in ./config/*; do
+	real="$(realpath "$file")"
+	name="$(basename "$file")"
+	echo "linking $real to ~/.config/$name"
+	ln -s "$real" ~/.config/"$name"
+done
