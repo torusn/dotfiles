@@ -109,7 +109,8 @@ source $ZSH/oh-my-zsh.sh
 bindkey -v
 
 # Basic Aliases
-alias {vim,nvim}="/opt/nvim-linux64/bin/nvim"
+# alias {vim,nvim}="/opt/nvim-linux64/bin/nvim"
+alias {vim,nvim}="nvim"
 alias l='ls -B --color=auto'
 alias ls='ls --color=auto'
 alias rm='rm -i'
@@ -124,7 +125,8 @@ alias t='tmux-sessionizer'
 alias rsync='rsync --info=progress2'
 
 # Set Editor to lvim for CLI tools to use lvim
-export EDITOR="/opt/nvim-linux64/bin/nvim"
+# export EDITOR="/opt/nvim-linux64/bin/nvim"
+export EDITOR="nvim"
 
 
 export PNPM_HOME="/home/torusn/.local/share/pnpm"
