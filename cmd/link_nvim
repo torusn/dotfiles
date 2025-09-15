@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -e
+
+config_path="./nvim_minimal"
+pwd_name="$(basename "$PWD")"
+
+if [ "$pwd_name" != "dotfiles" ]; then
+	echo "must be run from root of dotfiles dir"
+	exit 1
+fi
+
+mkdir -p ~/.config
+
+if [ -z "$( ls -A "$config_path" )" ]; then
+	echo "nvim_minimal is empty, please run \`git submodule update --init\`"
+	exit 1
+fi
+
+real="$(realpath "$config_path")"
+ln -s "$real" ~/.config/nvim
