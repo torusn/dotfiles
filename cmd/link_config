@@ -15,5 +15,10 @@ for file in ./config/*; do
 	real="$(realpath "$file")"
 	name="$(basename "$file")"
 	echo "linking $real to ~/.config/$name"
-	ln -s "$real" ~/.config/"$name"
+    newpath="$HOME/.config/$name"
+    if [ -d $newpath ]; then
+        echo "backing up $newpath to /tmp/$name"
+        mv -f "$newpath" "/tmp/$name"
+    fi
+	ln -fTs "$real" ~/.config/"$name"
 done
