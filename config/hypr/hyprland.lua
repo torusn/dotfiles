@@ -330,7 +330,15 @@ hl.window_rule({
 hl.on("hyprland.start", function ()
     hl.exec_cmd("hypridle")
     hl.exec_cmd("waybar")
-    h1.exec_cmd("hyprlock || loginctl terminate-session $XDG_SESSION_ID")
+    -- os.execute runs the binary and returns a boolean success status natively
+    local locked_successfully = os.execute("hyprlock")
+    
+    if not locked_successfully then
+        -- If hyprlock failed to spawn or crashed, exit cleanly
+        hl.dsp.exit() 
+    end
+    -- The above replaced below
+    -- h1.exec_cmd("hyprlock || loginctl terminate-session $XDG_SESSION_ID")
     h1.exec_cmd("systemctl --user start hyprpolkitagent")
     hl.exec_cmd("udiskie")
     hl.exec_cmd("hyprpaper")
