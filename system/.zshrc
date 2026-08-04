@@ -130,7 +130,7 @@ export EDITOR="nvim"
 
 
 export PNPM_HOME="/home/torusn/.local/share/pnpm"
-export PATH="$PNPM_HOME:/usr/local/go/bin:$HOME/.local/bin:$HOME/.cargo/bin/:$HOME/go/bin/:$PATH"
+export PATH="$PNPM_HOME:/usr/local/go/bin:$HOME/.local/bin:$HOME/.cargo/bin/:$HOME/go/bin/:$HOME/.local/zig/:$PATH"
 
 if ! [[ -n "$TMUX" ]]
 then
