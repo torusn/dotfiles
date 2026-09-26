@@ -124,6 +124,9 @@ alias t='tmux-sessionizer'
 # rsync aliases
 alias rsync='rsync --info=progress2'
 
+# Quick resets
+alias goto-bios='sudo systemctl reboot --firmware-setup'
+
 # Set Editor to lvim for CLI tools to use lvim
 # export EDITOR="/opt/nvim-linux64/bin/nvim"
 export EDITOR="nvim"
