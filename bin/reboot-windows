@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -e
+
+WINDOWS_ENTRY="Windows Boot Manager (on /dev/nvme0n1p1)"
+
+sudo grub-reboot "$WINDOWS_ENTRY"
+sudo reboot
